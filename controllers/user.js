@@ -2,19 +2,19 @@ const User = require('../models/User')
 
 const dayjs = require('dayjs')
 
-exports.createUser = (req, res, next) => {
-    const user = User.create({
-        "lastName": "Bally ",
-        "firstName": "Charles",
-        "dateOfBirth": new Date(dayjs('11-10-1999', 'DD-MM-YYYY')),
-        "email": "charles@hotmail.com",
-        "status": "active"
+exports.createUser = async (req, res, next) => {
+    const {dateOfBirth} = req.body
+    console.log('body ', req.body)
+    console.log('params ',req.params)
+    const user = await User.create({
+        ...req.body,
+        dateOfBirth: new Date(dayjs(dateOfBirth, 'DD-MM-YYYY'))
     })
-    return user
+    res.send(user)
 }
 
-exports.readAllUser = (req, res, next) => {
-    const users = User.findAll()
+exports.readAllUser = async(req, res, next) => {
+    const users = await User.findAll()
     return users
 }
 

@@ -5,10 +5,12 @@ const router = express.Router()
 
 
 router.post('/users/create', createUser)
-router.get('/users/readAll', readAllUser)
+router.get('/users/readall', readAllUser)
 router.put('/users/update', (req, res, next) => {
 
 })
 router.delete('/users/delete', (req, res, next) => {
 
 })
+
+module.exports = router

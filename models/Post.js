@@ -1,40 +1,42 @@
-const {DataTypes} = require('sequelize')
+const { DataTypes } = require('sequelize')
 const db = require('../database/db')
 
-
-const PostModel = {
-
+const postModel = {
     id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV1,
+        allowNull: true,
         primaryKey: true
-    },
-    title: {
-        type: DataTypes.STRING
     },
     content: {
         type: DataTypes.TEXT,
-        allowNull:false
+        allowNull: true
+    },
+    title: {
+        type: DataTypes.STRING,
+        allowNull: false
     },
     status: {
-        type: DataTypes.STRING,
-        validate:{
-            isIn: [['published', 'draft']]
+        type:DataTypes.STRING,
+        validate: {
+            isIn:[['active', 'inactive']]
         },
+        defaultValue: 'inactive',
+        allowNull: true
+    },
+    image: {
+        type: DataTypes.STRING,
         allowNull: true,
-        defaultValue: 'draft'
     }
-    
-    
 }
 
-const PostOptions = {
+ const userOptions = {
     timestamps: true,
-    createAt: true,
+    createdAt: true,
     updatedAt: true,
     modelName: 'Post'
 
-}
+ }
 
-const Post = db.define('Post', PostModel, PostOptions )
-module.exports = Post
+ const Post = db.define('Post', postModel, userOptions)
+ module.exports = Post

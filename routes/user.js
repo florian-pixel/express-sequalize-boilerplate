@@ -1,16 +1,13 @@
 const express = require('express')
-const {createUser, readAllUser} = require('../controllers/user')
+const {createUser, readAllUser, readOneUser, updateUser, deleteUser} = require('../controllers/user')
 
-const router = express.Router()
+const userRouter = express.Router()
 
 
-router.post('/users/create', createUser)
-router.get('/users/readall', readAllUser)
-router.put('/users/update', (req, res, next) => {
+userRouter.post('/', createUser)
+userRouter.get('/', readAllUser)
+userRouter.get('/:id', readOneUser)
+userRouter.put('/:id', updateUser)
+userRouter.delete('/:id', deleteUser)
 
-})
-router.delete('/users/delete', (req, res, next) => {
-
-})
-
-module.exports = router
+module.exports = userRouter

@@ -6,3 +6,4 @@ const db = new Sequelize('databasetest', 'postgres', 'officer', {
 })
 
 module.exports = db
+

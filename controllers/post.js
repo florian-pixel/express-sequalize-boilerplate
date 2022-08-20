@@ -1,13 +1,18 @@
 const Post = require('../models/Post')
+const User = require('../models/User')
 
 exports.createPost = async (req, res, next) => {
+    const author = await User.findByPk( req.body.UserId)
+    if(!author) {
+        return res.status(404).send(` This user does not exist in our database `)
+    }
     const post = await Post
-        .create({
-            ...req.body
-        })
+        .create({ ...req.body })
         .catch(err => {throw new Error(err)})
 
-    return res.status(201).json(post)
+   await author.addPost(post)
+   
+   return res.status(201).json(post)
 }
 
 exports.readAllPost = async (req, res, next) => {

@@ -1,5 +1,6 @@
 const {DataTypes} = require('sequelize')
 const db = require('../database/db')
+const Post = require('./Post')
 
 
 const userModel = {
@@ -49,4 +50,12 @@ const userOptions = {
     modelName: 'User'
 }
 const User = db.define('User', userModel, userOptions)
+
+Post.author = Post.belongsTo(User)
+User.posts = User.hasMany(Post, {
+    as: 'posts',
+    onDelete: 'CASCADE',
+    onUpdate: ''
+})
+
 module.exports = User

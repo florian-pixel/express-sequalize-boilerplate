@@ -8,6 +8,7 @@ db.authenticate()
     .then(() => console.log('Database connected...'))
     .catch(err => console.error(err))
 
+// db.sync({force:true})
 db.sync()
     .catch(err => console.error(err))
 
@@ -18,3 +19,4 @@ app.use('/api', router)
 // app.use('/api',routerPost)
 
 app.listen(3000)
+

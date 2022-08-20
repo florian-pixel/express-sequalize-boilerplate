@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize')
 const db = require('../database/db')
 
+
 const postModel = {
     id: {
         type: DataTypes.UUID,
@@ -30,13 +31,15 @@ const postModel = {
     }
 }
 
- const userOptions = {
+const postOptions = {
     timestamps: true,
     createdAt: true,
     updatedAt: true,
     modelName: 'Post'
+}
 
- }
+const Post = db.define('Post', postModel, postOptions)
 
- const Post = db.define('Post', postModel, userOptions)
- module.exports = Post
+
+
+module.exports = Post

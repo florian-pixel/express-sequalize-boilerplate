@@ -1,5 +1,7 @@
 const {DataTypes} = require('sequelize')
+const bcrypt = require('bcrypt')
 const db = require('../database/db')
+
 const Post = require('./Post')
 
 
@@ -33,6 +35,12 @@ const userModel = {
         },
         unique: true
     },
+    password: {
+        type: DataTypes.STRING,
+        validate: {
+            isAlphanumeric: true
+        }
+    },
     status: {
         type: DataTypes.STRING,
         validate:{
@@ -44,11 +52,32 @@ const userModel = {
 }
 
 const userOptions = {
-    timestamps: true,
-    createdAt: true,
-    updatedAt: true,
-    modelName: 'User'
-}
+  timestamps: true,
+  createdAt: true,
+  updatedAt: true,
+  scopes: {
+    withoutPassword: {
+      attributes: [
+        "id",
+        "lastName",
+        "firstName",
+        "fullName",
+        "dateOfBirth",
+        "email",
+        "status",
+      ],
+    },
+  },
+  hooks: {
+    beforeCreate: async function (user, options) {
+      if (user.password) {
+        const salt = await bcrypt.genSalt(10);
+        user.password = await bcrypt.hash(user.password, salt);
+      }
+    },
+  },
+  modelName: "User",
+};
 const User = db.define('User', userModel, userOptions)
 
 Post.author = Post.belongsTo(User)

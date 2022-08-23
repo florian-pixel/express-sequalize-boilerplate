@@ -15,7 +15,9 @@ exports.createUser = async (req, res, next) => {
 }
 
 exports.readAllUser = async (req, res, next) => {
-    const users = await User.findAll()
+    const users = await User
+        .scope('withoutPassword')
+        .findAll()
     return res.status(200).json(users)
 }
 

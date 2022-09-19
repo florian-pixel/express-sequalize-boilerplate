@@ -39,13 +39,13 @@ exports.updateUser = async (req, res, next) => {
     let { dateOfBirth } = req.body
     if ( dateOfBirth) {
          // 1. Verifier si la dateofbirth a été mis à jour 
-    // 2. Mettre la date de naissance au format date (js)
-    // 3. ecraser l'ancienne valeur avec la nouvelle valeur de la dateofbirth dans le body 
-    // 4. Update l'utilisateur dans la base de donnée avec le nouveau body 
-    // 5. Envoyer la reponse 
+        // 2. Mettre la date de naissance au format date (js)
+        // 3. ecraser l'ancienne valeur avec la nouvelle valeur de la dateofbirth dans le body 
+        // 4. Update l'utilisateur dans la base de donnée avec le nouveau body 
+        // 5. Envoyer la reponse 
 
-      const dateOfBirthUpdated = new Date(dayjs(dateOfBirth, 'DD-MM-YYYY'))
-       user = {...req.body, dateOfBirth : dateOfBirthUpdated}
+        const dateOfBirthUpdated = new Date(dayjs(dateOfBirth, 'DD-MM-YYYY'))
+        user = {...req.body, dateOfBirth : dateOfBirthUpdated}
         await User
             .update(user, {
                 where: { id:req.params.id }
